@@ -7,6 +7,7 @@ public class KM {
 	protected Grad grad;
 
 	public KM() {
+		this.id = -1;
 	}
 
 	public KM(int id, String naziv, int brPosetilaca, Grad grad) {
@@ -15,7 +16,7 @@ public class KM {
 		this.brPosetilaca = brPosetilaca;
 		this.grad = grad;
 	}
-
+	
 	@Override
 	public String toString() {
 		return naziv + " " + grad;
