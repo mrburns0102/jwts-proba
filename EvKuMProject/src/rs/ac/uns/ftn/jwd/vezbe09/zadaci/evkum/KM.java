@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.model;
+package rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum;
 
 public class KM {
 	protected int id;
@@ -7,7 +7,6 @@ public class KM {
 	protected Grad grad;
 
 	public KM() {
-		this.id = -1;
 	}
 
 	public KM(int id, String naziv, int brPosetilaca, Grad grad) {
@@ -16,10 +15,10 @@ public class KM {
 		this.brPosetilaca = brPosetilaca;
 		this.grad = grad;
 	}
-	
+
 	@Override
 	public String toString() {
-		return naziv;
+		return naziv + " " + grad;
 	}
 
 	@Override

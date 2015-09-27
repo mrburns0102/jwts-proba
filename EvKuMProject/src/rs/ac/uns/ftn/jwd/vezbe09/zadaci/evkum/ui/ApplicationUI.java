@@ -8,14 +8,15 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.dao.GradDao;
-//import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.model.Grad;
+import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.dao.GradDАО;
+import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.dao.KMDAO;
 import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.utils.ScannerWrapper;
 
 public class ApplicationUI {
 	private static Logger logger = LogManager.getLogger(ApplicationUI.class.toString());
-	private static GradDao gradDao = new GradDao(); 
-	
+	private static GradDАО gradDao = new GradDАО();
+	private static KMDAO kmDao = new KMDAO();
+
 	public static Connection conn;
 
 	static {
@@ -38,10 +39,10 @@ public class ApplicationUI {
 		int odluka = -1;
 		while (odluka != 0) {
 			ApplicationUI.ispisiMenu();
-			
+
 			System.out.print("opcija:");
 			odluka = ScannerWrapper.ocitajCeoBroj();
-			
+
 			switch (odluka) {
 			case 0:
 				System.out.println("Izlaz iz programa");
@@ -50,13 +51,16 @@ public class ApplicationUI {
 				ispisiGradove();
 				break;
 			case 2:
-				
+				prikazKM();
+				break;
+			case 3:
+				prikazKMById();
 				break;
 			default:
 				System.out.println("Nepostojeca komanda");
 				break;
 			}
-			
+
 		}
 		logger.exit(true);
 	}
@@ -68,19 +72,35 @@ public class ApplicationUI {
 		System.out.println("\tOpcija broj 2 - Prikaz kulturnih manifestacija;");
 		System.out.println("\tOpcija broj 3 - Pretraga kulturne manifestacije po identifikatoru;");
 		System.out.println("\tOpcija broj 0 - IZLAZ IZ PROGRAMA.");
-		
+
 	}
-	
-	/** METODE ZA ISPIS GRADOVA  ****/
-	// ispisi sve studente
+
+	/** METODA ZA ISPIS GRADOVA ****/
+	// ispisi sve gradove
 	public static void ispisiGradove() {
-		List<String> sviGradovi = 
-				gradDao.getGradovi(ApplicationUI.conn);
-		System.out.println("\n");
+		List<String> sviGradovi = gradDao.getGradovi(ApplicationUI.conn);
 		for (int i = 0; i < sviGradovi.size(); i++) {
 			System.out.println(sviGradovi.get(i));
 		}
 		System.out.println("\n");
 	}
 
+	/** METODA ZA ISPIS KULTURNIH MANIFESTACIJA ****/
+	// ispisi sve kulturne manifestacije
+	public static void prikazKM() {
+		System.out.printf("Kulturna manifestacija | Mesto održavanja\n");
+		List<String> sveKM = kmDao.prikazKM(ApplicationUI.conn);
+		for (int i = 0; i < sveKM.size(); i++) {
+			System.out.println(sveKM.get(i));
+		}
+		System.out.println("\n");
+	}
+
+	public static void prikazKMById() {
+		System.out.println("Unesite id kulturne manifestacije.");
+		int id = ScannerWrapper.ocitajCeoBroj();
+		System.out.printf("Kulturna manifestacija | Mesto održavanja\n");
+		String km = kmDao.pretragaKMById(ApplicationUI.conn, id);
+		System.out.println(km + "\n");
+	}
 }

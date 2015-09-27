@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 //import rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.model.Grad;
 
-public class GradDao {
-	public static Logger log = LogManager.getLogger(GradDao.class.getName());
+public class GradDАО {
+	public static Logger log = LogManager.getLogger(GradDАО.class.getName());
 
 	public List<String> getGradovi(Connection conn) {
 		List<String> retVal = new ArrayList<String>();
@@ -33,5 +33,4 @@ public class GradDao {
 		}
 		return retVal;
 	}
-
 }
