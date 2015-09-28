@@ -1,5 +1,9 @@
 package rs.ac.uns.ftn.jwd.vezbe09.zadaci.evkum.ui;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -56,6 +60,10 @@ public class ApplicationUI {
 			case 3:
 				prikazKMById();
 				break;
+			case 4 :
+				//izmenaNazKM();
+				ispisiMaxKM();
+				break;
 			default:
 				System.out.println("Nepostojeca komanda");
 				break;
@@ -64,6 +72,8 @@ public class ApplicationUI {
 		}
 		logger.exit(true);
 	}
+
+	
 
 	private static void ispisiMenu() {
 		System.out.println("Evidencija kulturnih manifestacija i gradova");
@@ -102,5 +112,36 @@ public class ApplicationUI {
 		System.out.printf("Kulturna manifestacija | Mesto održavanja\n");
 		String km = kmDao.pretragaKMById(ApplicationUI.conn, id);
 		System.out.println(km + "\n");
+	}
+	
+	private static void ispisiMaxKM() {
+		System.out.printf("Kulturna manifestacija | Mesto održavanja\n");
+		List<String> km = kmDao.kmMaxPosetilaca(ApplicationUI.conn);
+		for (int i = 0; i < km.size(); i++) {
+			System.out.println(km.get(i));
+		}
+		System.out.println(km.toString());
+		try{
+			File file = new File("izvestaj.txt");
+			
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(km.toString());
+			bw.close();
+
+			System.out.println("Done");
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+
+private static void izmenaNazKM() {
+			
 	}
 }
